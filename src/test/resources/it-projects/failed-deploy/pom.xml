@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A deploy that fails: the repository is below a regular file, so no file can be written. The build fails, the list is still written. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example.deployedfiles.it</groupId>
+    <artifactId>failed-deploy</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>it-releases</id>
+            <url>file://${project.basedir}/pom.xml/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>it-snapshots</id>
+            <url>file://${project.basedir}/pom.xml/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

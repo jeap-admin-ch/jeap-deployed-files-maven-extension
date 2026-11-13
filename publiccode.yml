@@ -1,0 +1,51 @@
+publiccodeYmlVersion: 0.4.0
+name: jeap-deployed-files-maven-extension
+applicationSuite: jEAP
+softwareVersion: 1.0.0
+releaseDate: 2026-11-13
+url: "https://github.com/jeap-admin-ch/jeap-deployed-files-maven-extension.git"
+landingURL: "https://github.com/jeap-admin-ch/jeap"
+platforms:
+  - linux
+  - windows
+  - mac
+categories:
+  - application-development
+developmentStatus: stable
+softwareType: library
+organisation:
+  uri: https://ld.admin.ch/office/V.1.7
+  name: Federal Office of Information Technology, Systems and Telecommunication
+description:
+  en:
+    localisedName: jeap-deployed-files-maven-extension
+    shortDescription: Maven core extension that records every file a build deploys and writes the list as JSON
+    longDescription: >
+      Maven core extension that records every file a build deploys to a remote repository and writes the list as a
+      JSON file when the build ends. The list names what Maven really uploaded: jars, POMs, attached artifacts such
+      as sources and javadoc jars, signatures and the maven-metadata.xml files, each with its repository, its path,
+      its size and its SHA-1 checksum. Snapshots are listed under their timestamped file names, and modules that are
+      not deployed are absent.
+
+      A later step of a delivery pipeline can use the list to work with exactly the files a build has published,
+      for example to copy them to another repository, without having to derive them from module coordinates or from
+      a repository search.
+
+      The extension is loaded with the Maven option maven.ext.class.path, so the projects that are built need no
+      change. It requires Maven 3.9 and Java 25 or newer. It never fails the build: every error is caught and logged as a warning. Failed and unfinished uploads
+      are listed with their status, so that a partial deploy stays traceable.
+    features:
+      - Records every deployed artifact and metadata file with repository, path, size and SHA-1 checksum
+      - Lists snapshots under their timestamped file names and marks failed and unfinished uploads
+      - Loaded as a Maven core extension without changes to the projects that are built
+legal:
+  license: Apache-2.0
+maintenance:
+  type: internal
+  contacts:
+    - name: Federal Office of Information Technology, Systems and Telecommunication FOITT
+      email: jeap-community@bit.admin.ch
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - en

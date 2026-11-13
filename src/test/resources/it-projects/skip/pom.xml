@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- deployedFiles.skip (see test.properties) turns the extension off: the build deploys, no list is written. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example.deployedfiles.it</groupId>
+    <artifactId>skip</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>it-releases</id>
+            <url>file://${project.basedir}/repository/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>it-snapshots</id>
+            <url>file://${project.basedir}/repository/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

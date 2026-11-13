@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A multi-module release as a jEAP library deploys it: the whole reactor at the end of the build, one module with
+     an attached sources jar, and one module that is not deployed. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example.deployedfiles.it</groupId>
+    <artifactId>release-reactor</artifactId>
+    <version>1.2.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>module-a</module>
+        <module>module-b</module>
+        <module>module-c</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>it-releases</id>
+            <url>file://${maven.multiModuleProjectDirectory}/repository/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>it-snapshots</id>
+            <url>file://${maven.multiModuleProjectDirectory}/repository/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${it.maven-source-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${it.maven-deploy-plugin.version}</version>
+                <configuration>
+                    <deployAtEnd>true</deployAtEnd>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

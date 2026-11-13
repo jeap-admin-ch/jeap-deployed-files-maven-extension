@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A snapshot, deployed twice: the list of the second build names the files of the second build. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example.deployedfiles.it</groupId>
+    <artifactId>snapshot</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>it-releases</id>
+            <url>file://${project.basedir}/repository/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>it-snapshots</id>
+            <url>file://${project.basedir}/repository/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

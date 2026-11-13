@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The list is written to the path given with deployedFiles.output (see test.properties). -->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example.deployedfiles.it</groupId>
+    <artifactId>custom-output</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>it-releases</id>
+            <url>file://${project.basedir}/repository/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>it-snapshots</id>
+            <url>file://${project.basedir}/repository/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <url>https://github.com/jeap-admin-ch/jeap-deployed-files-maven-extension/tree/main</url>
+    <scm>
+        <url>https://github.com/jeap-admin-ch/jeap-deployed-files-maven-extension.git</url>
+        <connection>scm:git:git://github.com/jeap-admin-ch/jeap-deployed-files-maven-extension.git</connection>
+        <developerConnection>scm:git:ssh://github.com:jeap-admin-ch/jeap-deployed-files-maven-extension.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <name>BIT</name>
+            <email>jeap-community@bit.admin.ch</email>
+            <organization>Federal Office of Information Technology, Systems and Telecommunication FOITT</organization>
+            <organizationUrl>https://www.bit.admin.ch/</organizationUrl>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <parent>
+        <artifactId>jeap-internal-spring-boot-parent</artifactId>
+        <groupId>ch.admin.bit.jeap</groupId>
+        <version>11.13.0</version>
+    </parent>
+
+    <artifactId>jeap-deployed-files-maven-extension</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>
+        Maven core extension that records every file a build deploys to a remote repository and writes the list as JSON.
+    </description>
+
+    <properties>
+        <maven.javadoc.skip>false</maven.javadoc.skip>
+        <sisu-maven-plugin.version>1.1.0</sisu-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Everything the extension uses is provided by the Maven that loads it: the jar has no runtime dependencies -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <Bundle-License>https://www.apache.org/licenses/LICENSE-2.0</Bundle-License>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <!-- Writes META-INF/sisu/javax.inject.Named, the index by which Maven finds the event spy in a jar
+                     on maven.ext.class.path -->
+                <groupId>org.eclipse.sisu</groupId>
+                <artifactId>sisu-maven-plugin</artifactId>
+                <version>${sisu-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>index-project</id>
+                        <goals>
+                            <goal>main-index</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Integration tests (*IT): they run real Maven builds that deploy the projects under
+                     src/test/resources/it-projects with the packaged extension loaded. The builds they start use the
+                     Maven, the settings and the local repository of this build. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <it.extensionJar>${project.build.directory}/${project.build.finalName}.jar</it.extensionJar>
+                        <it.mavenHome>${maven.home}</it.mavenHome>
+                        <it.userSettings>${session.request.userSettingsFile.absolutePath}</it.userSettings>
+                        <it.globalSettings>${session.request.globalSettingsFile.absolutePath}</it.globalSettings>
+                        <it.localRepository>${settings.localRepository}</it.localRepository>
+                        <it.maven-source-plugin.version>${maven-source-plugin.version}</it.maven-source-plugin.version>
+                        <it.maven-deploy-plugin.version>${maven-deploy-plugin.version}</it.maven-deploy-plugin.version>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <!-- Check third-party license compliance -->
+            <plugin>
+                <groupId>org.honton.chas</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+            <!-- Generate third-party license list and check for missing license information -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
