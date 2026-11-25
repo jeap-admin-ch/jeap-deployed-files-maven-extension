@@ -1,7 +1,7 @@
 publiccodeYmlVersion: 0.4.0
 name: jeap-deployed-files-maven-extension
 applicationSuite: jEAP
-softwareVersion: 1.0.0
+softwareVersion: 1.1.0
 releaseDate: 2026-11-25
 url: "https://github.com/jeap-admin-ch/jeap-deployed-files-maven-extension.git"
 landingURL: "https://github.com/jeap-admin-ch/jeap"
